@@ -1,0 +1,19 @@
+T230：（求搜索树中第k个数）
+      固定其中一个写法。但是现在有点记不住。还有就是返回值的时候要注意return -1;
+          int kthSmallest(TreeNode* root, int k) {
+        stack<TreeNode*> s;
+        TreeNode* cur=root;
+        while(cur!=NULL || !s.empty()){
+            if(cur!=NULL){
+                s.push(cur);
+                cur=cur->left;
+            }
+            else{
+                cur=s.top();s.pop();
+                k--;
+                if(k==0){return cur->val;}
+                cur=cur->right;
+            }
+        }
+        return -1;//我这有点反应不过来。注意这个地方要有return
+  

@@ -1,4 +1,5 @@
 T230：（求搜索树中第k个数）
+      搜索树的中序：递增序列。（特点）
       固定其中一个写法。但是现在有点记不住。还有就是返回值的时候要注意return -1;
           int kthSmallest(TreeNode* root, int k) {
         stack<TreeNode*> s;

@@ -12,7 +12,7 @@ T 240：二维矩阵搜索
         
 T 268：缺失数字
   思路：求1-n的和，然后相减，最后剩余的
-  优化：1-n的和，用(n-1)*n/2 会溢出。
+  优化：1-n的和，用(n-1)*n/2 会溢出。边加边减。这一点要注意。
   public:
     int missingNumber(vector<int>& nums) {
         int n=nums.size();int sum=0;

@@ -133,4 +133,6 @@ T279：平方数的和
           leetcode题解
           https://leetcode-cn.com/problems/longest-increasing-subsequence/solution/dong-tai-gui-hua-er-fen-cha-zhao-tan-xin-suan-fa-p/
               
-              
+ T 326 ：看数是不是3的幂
+    循环的方法比较简单。比较少见的是硬编码的形式：
+    

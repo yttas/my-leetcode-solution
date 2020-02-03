@@ -12,4 +12,69 @@ T 347：这个题用到了堆排序和桶排序。这两种排序一直都是模
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
       关于topk的问题，要想到堆排序：
       
-      347题只要想到用自定义堆排序就不难。
+      347题只要想到用自定义堆排序就不难。有两种做法：维护k个数的最小堆，然后倒序赋值给res。求出最大堆然后取前k个
+     public:
+    struct cmp{
+            bool operator()(const pair<int,int>& l,const pair<int,int>& r){
+                return l.second>r.second;
+            }
+        };
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int,int> m;
+        for(int i=0;i<nums.size();++i){
+            ++m[nums[i]];//注意这个地方
+        }
+        priority_queue<pair<int,int>,vector<pair<int,int>>,cmp> queue;
+        for(auto iter=m.begin();iter!=m.end();iter++){
+            queue.push(*iter);
+            if(queue.size()>k){
+                queue.pop();
+            }
+            
+        }
+        vector<int> res(k,0);
+        for(int i=k-1;i>=0;--i){
+            res[i]=queue.top().first;
+            queue.pop();
+        }
+        return res;
+        
+    }
+    
+    求出最大堆：
+      
+      struct CmpByValueLess {
+    bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) {
+        return lhs.second < rhs.second;
+    }
+};
+
+vector<int> topKFrequent(vector<int>& nums, int k) {
+
+    //统计次数
+    unordered_map<int, int> m;
+
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        ++m[nums.at(i)];
+    }
+
+    //放入优先队列
+    //注意：使用STL的优先队列 priority_queue  Comparator = greater 为小堆；Comparator = less 为大堆   
+    priority_queue<pair<int, int>, vector<pair<int, int>>, CmpByValueLess> queue;
+    for (auto iter = m.begin(); iter != m.end(); ++iter)
+    {
+        queue.push(*iter);
+    }
+
+    vector<int> res(k);
+    for (int i = 0; i < k; ++i)
+    {
+        res.at(i) = queue.top().first;
+        queue.pop();
+    }
+
+    return res;
+}
+
+

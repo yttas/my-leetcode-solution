@@ -6,3 +6,42 @@ T 378：
   比较技巧的地方是找比mid小的数一共有多少个。找的时候，按着之前看的二维搜索来找，就是排除一列或者一行。这个复杂度是o(n)
   二分法找数，这个跟平时 不一样，是按着数值二分，而且注意一下复杂度的算法
   而且有一个毛病，每次碰到二分法查找就会把要找的那个数搞错，写错。这次也是把数和次数写反。
+  
+    //先找中位数
+        quickSelect(nums,0,nums.size();num.size()/2);
+        auto midptr=nums.begin()+num.size()/2;
+        int mid=*midptr;//相当于nums[len/2]
+        
+        int i=0;int j=0;int k=nums.size()-1;
+        while(j<=k){
+            if(nums[j]<mid){
+                swap(nums,j++,i++);
+            }
+            else if(nums[j]==mid){
+                j++;
+            }
+            else{
+                swap(nums,j,k--);
+            }
+            
+        }
+        
+        
+    }
+    void quickSelect(vector<int>& nums,int l,int r,int k){
+        int i=l;int j=r;//右边取不到
+        int tmp=nums[l];
+        while(j<r){
+            if(nums[j]<=tmp){
+                swap(num,i++,j++);
+            }else{
+                ++j;
+            } //当tmp的位置正好是k的时候，i指的位置是k+1       
+        }
+        if(i>k+1){
+            quickSelect(nums,l,i-1,k);
+        }
+        else if(i<=k){
+            quickSelect(nums,i,r,k);
+        }
+    }

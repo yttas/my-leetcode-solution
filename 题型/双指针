@@ -14,5 +14,28 @@ T 334 ：递增的三元组
     还要注意到相等的情况。等于的时候一定要替换不然【1,1,1】会返回true;
     
     学到： 我总是在一些题里面想到方法但是自己总想一些反例来否定这个方法，实际要注意这些反例的特点，这些反例有可能是解题的题眼。
+
+    还有一种方法，感觉挺好的，虽然不符合空间复杂度为o(1)。记录一下。
     
-      
+    思路三：前后遍历
+          定义两个数组forward[i]和backward[i]，forward[i]从前向后遍历，保存[0, i]之间最小元素值，backward[i]从后向前遍历，
+          保存[i, size - 1]间最大元素值。然后从前向后遍历，如果找到一个数满足forward[i] < nums[i] < backward[i]，则表示三元子序列存在。
+          比如：
+          nums[i]: 8 3 5 1 6
+          forwa[i]: 8 3 3 1 1
+          backw[i]:8 6 6 6 6
+
+          代码
+          时间复杂度：O(n)
+          空间复杂度：O(n)
+                  for (int i = 1; i < size; ++i) {
+                      f[i] = min(f[i - 1], nums[i]);
+                  }
+                  for (int i = size - 2; i >= 0; --i) {
+                      b[i] = max(b[i + 1], nums[i]);
+                  }
+                  for (int i = 0; i < size; ++i) {
+                      if (f[i] < nums[i] && nums[i] < b[i]) return true;
+                  }
+                  return false;
+

@@ -1,2 +1,76 @@
 最烦这样的题，找个时间需要总结一下
   T 341 
+  T 384 洗牌设计
+      这个题更像是一个概率题。比较难理解的是最后reset部分
+        vector<int> reset() {
+        *array = original;
+        return *array;
+           }
+       我以为是只return original就行，因为original 本身就是深拷贝：这里返回*original也可以，只是我们把这个reset理解成把原本的reset
+       
+      这个题的解法一种，但是有两种写法。
+      
+      vector<int> array(nums)  复制：深拷贝
+      array=nums  深拷贝
+      
+      vector<int> arr*=&nums 浅拷贝。
+       *array=nums;//深拷贝
+       
+       代码·1：
+       class Solution {
+            private:
+                vector<int>* array;
+                vector<int> original;
+                default_random_engine e;
+            public:
+                Solution(vector<int>& nums) {
+                    array = &nums; // 浅复制
+                    original = nums; // 深复制
+                    e.seed(time(0));
+                }
+
+                /** Generates random number in the range. */
+                int randRange(int start, int end){
+                    uniform_int_distribution<int> u(start, end);
+                    return u(e);
+                }
+
+                /** Resets the array to its original configuration and return it. */
+                vector<int> reset() {
+                    *array = original;
+                    return *array;
+                }
+
+                /** Returns a random shuffling of the array. */
+                vector<int> shuffle() {
+                    for (int i = 0; i < array->size(); ++i){
+                        swap(*(array->begin() + i), *(array->begin() + randRange(i, array->size() - 1)));
+                    }
+                    return *array;
+                }
+            };
+       代码·2：
+        class Solution {
+              private:
+                  vector<int> nums;
+              public:
+                  Solution(vector<int>& nums) {
+                      this->nums=nums;//深拷贝
+                  }
+
+                  /** Resets the array to its original configuration and return it. */
+                  vector<int> reset() {
+                      return this->nums;
+                  }
+
+                  /** Returns a random shuffling of the array. */
+                  vector<int> shuffle() {
+                      vector<int> array(nums);
+                      for(int i=0;i<array.size();++i){
+                          int pos=rand()%(array.size()-i);//pos在0到size()-1-i之间
+                          swap(array[i+pos],array[i]);//i+poa在i到size()-1之间
+                      }
+                      return array;
+                  }
+              };
+       

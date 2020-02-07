@@ -1,5 +1,40 @@
 最烦这样的题，找个时间需要总结一下
-  T 341 
+  T 341   faltted 
+    这个题关键的设计就是，有可能List里面还是List还是list。所以需要一个循环。
+    
+    这个其实是有一个常用的解法的：
+    next:就是只负责获取
+    hasnext：就是负责来来操作栈顶，来把符合条件的来弄到栈顶。
+    ————————————————————————————————————————————————————————————————————————————————
+    public:
+    NestedIterator(vector<NestedInteger> &nestedList) {
+        for(auto iter=nestedList.rbegin();iter!=nestedList.rend();++iter){
+            st.push(*iter);
+        }
+    }
+
+    int next() {
+        auto i =st.top();
+        st.pop();
+        return i.getInteger();
+    }
+
+    bool hasNext() {
+        //hasNext的作用就是栈顶是整数就返回true，栈顶不是整数，
+        //就把栈顶变成整数:变成整数就需要循环，一遍一遍扒皮。然后循环返回true;
+        while(!st.empty()){
+            auto cur=st.top();
+            if(cur.isInteger()){return true;}
+            st.pop();
+            auto curList=cur.getList();
+            for(auto iter=curList.rbegin();iter!=curList.rend();++iter){
+                st.push(*iter);
+            }
+        }
+        return false;
+    }
+    
+
   T 384 洗牌设计
       这个题更像是一个概率题。比较难理解的是最后reset部分
         vector<int> reset() {

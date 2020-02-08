@@ -1,4 +1,11 @@
 最烦这样的题，找个时间需要总结一下
+
+  T 380 常数时间，插入，获取，删除元素
+  常数时间：
+  hash表：insert remove 查找；列表：insert getrandom
+  注意：hash帮助查找索引。帮助列表实现常数remove
+    
+  
   T 341   faltted 
     这个题关键的设计就是，有可能List里面还是List还是list。所以需要一个循环。
     

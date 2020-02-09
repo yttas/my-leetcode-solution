@@ -1,0 +1,32 @@
+T 84 ：
+
+  维持一个递增的栈：
+  当遇到递减的情况时把前面所有的值都弹出，在弹出过程中算可以围成的矩形面积。
+  分治：
+  class Solution {
+private:
+    int res=0;
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        subRectangle(heights,0,heights.size()-1);
+        return res;
+
+    }
+
+    void subRectangle(vector<int>& heights,int l,int r){
+        if(l<=r){
+            res=max(res,heights[l]);
+            return ;
+        }
+        int min_idx=l;int tmp=heights[l];
+        for(int i=l;i<=r;++i){
+            if(heights[i]<tmp){
+                tmp=heights[i];
+                min_idx=i;
+            }
+        }
+        res=max(res,tmp*(l-r+1));
+        subRectangle(heights,l,min_idx-1);
+        subRectangle(heights,min_idx+1,r);
+    }
+};
